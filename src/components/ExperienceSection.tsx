@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import SectionHeading from "@/components/SectionHeading";
+import { easeSmooth, staggerContainer, staggerItem, viewportReveal } from "@/lib/motion";
 
 const experiences = [
   {
@@ -28,42 +30,39 @@ const ExperienceSection = () => {
   return (
     <section className="py-24" id="experience">
       <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">Professional Journey</h2>
-          <div className="w-16 h-1 bg-primary mx-auto rounded-full" />
-        </motion.div>
+        <SectionHeading title="Professional Journey" />
 
-        <div className="max-w-3xl mx-auto space-y-12">
+        <div className="mx-auto max-w-3xl space-y-12">
           {experiences.map((exp, idx) => (
-            <motion.div
+            <motion.article
               key={idx}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.15 }}
-              className="relative pl-8 border-l-2 border-primary/30"
+              viewport={viewportReveal}
+              transition={{ duration: 0.65, ease: easeSmooth, delay: idx * 0.12 }}
+              className="relative border-l-2 border-primary/30 pl-8"
             >
-              <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-primary" />
+              <div className="absolute -left-[9px] top-1 h-4 w-4 rounded-full bg-primary ring-4 ring-background" />
               <div className="mb-4">
                 <h3 className="text-xl font-bold text-foreground">{exp.title}</h3>
-                <p className="text-primary font-semibold">{exp.company}</p>
+                <p className="font-semibold text-primary">{exp.company}</p>
                 <p className="text-sm text-muted-foreground">{exp.period}</p>
               </div>
-              <ul className="space-y-3">
+              <motion.ul
+                className="space-y-3"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportReveal}
+              >
                 {exp.points.map((pt, i) => (
-                  <li key={i}>
+                  <motion.li key={i} variants={staggerItem}>
                     <span className="font-semibold text-foreground">{pt.label}: </span>
                     <span className="text-muted-foreground">{pt.desc}</span>
-                  </li>
+                  </motion.li>
                 ))}
-              </ul>
-            </motion.div>
+              </motion.ul>
+            </motion.article>
           ))}
         </div>
       </div>

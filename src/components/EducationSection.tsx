@@ -1,33 +1,27 @@
 import { motion } from "framer-motion";
 import { GraduationCap } from "lucide-react";
+import SectionHeading from "@/components/SectionHeading";
+import { easeSmooth, viewportReveal } from "@/lib/motion";
 
 const EducationSection = () => {
   return (
     <section className="py-24" id="education">
       <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">Education</h2>
-          <div className="w-16 h-1 bg-primary mx-auto rounded-full" />
-        </motion.div>
+        <SectionHeading title="Education" />
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="max-w-2xl mx-auto bg-card rounded-xl p-8 shadow-sm border border-border text-center"
+          viewport={viewportReveal}
+          transition={{ duration: 0.65, ease: easeSmooth }}
+          whileHover={{ y: -4, transition: { duration: 0.22 } }}
+          className="mx-auto max-w-2xl rounded-xl border border-border bg-card p-8 text-center shadow-sm transition-shadow duration-300 hover:shadow-md"
         >
-          <div className="w-14 h-14 rounded-full bg-primary/15 flex items-center justify-center mx-auto mb-5">
-            <GraduationCap className="w-7 h-7 text-primary" />
+          <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-primary/15">
+            <GraduationCap className="h-7 w-7 text-primary" />
           </div>
-          <h3 className="text-xl font-bold text-foreground mb-2">B.Tech in Computer Science and Engineering</h3>
-          <p className="text-muted-foreground text-sm leading-relaxed">
+          <h3 className="mb-2 text-xl font-bold text-foreground">B.Tech in Computer Science and Engineering</h3>
+          <p className="text-sm leading-relaxed text-muted-foreground">
             Vel Tech Rangarajan Dr. Sagunthala R&D Institute of Science and Technology
           </p>
         </motion.div>
