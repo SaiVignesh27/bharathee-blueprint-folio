@@ -44,7 +44,7 @@ const ContactSection = () => {
               rel="noopener noreferrer"
               className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
             >
-              <Linkedin className="w-5 h-5 text-primary" />
+              <ExternalLink className="w-5 h-5 text-primary" />
               LinkedIn Profile
             </a>
           </div>
