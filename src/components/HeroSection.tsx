@@ -1,14 +1,52 @@
-import { motion } from "framer-motion";
+import { type MouseEvent } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { MapPin, Download, MessageCircle } from "lucide-react";
 
-const HeroSection = () => {
-  return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Decorative blobs */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+const RESUME_URL = "/krishna_resume.pdf";
+const RESUME_FILENAME = "krishna_resume.pdf";
 
-      <div className="container mx-auto px-6 py-20 relative z-10">
+const HeroSection = () => {
+  const reduceMotion = useReducedMotion();
+
+  const handleResumeClick = async (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    // Open while still in the user-gesture turn (popup blockers allow this)
+    window.open(RESUME_URL, "_blank", "noopener,noreferrer");
+
+    try {
+      const res = await fetch(RESUME_URL);
+      if (!res.ok) throw new Error("Failed to load resume");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = RESUME_FILENAME;
+      a.rel = "noopener";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch {
+      // Preview tab already opened above; nothing else to do
+    }
+  };
+
+  return (
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden pt-20">
+      <motion.div
+        className="absolute left-10 top-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl"
+        animate={reduceMotion ? undefined : { y: [0, -18, 0], x: [0, 8, 0] }}
+        transition={reduceMotion ? undefined : { duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        aria-hidden
+      />
+      <motion.div
+        className="absolute bottom-16 right-10 h-96 w-96 rounded-full bg-accent/10 blur-3xl"
+        animate={reduceMotion ? undefined : { y: [0, 14, 0], x: [0, -10, 0] }}
+        transition={reduceMotion ? undefined : { duration: 13, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        aria-hidden
+      />
+
+      <div className="container relative z-10 mx-auto px-6 py-16">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -52,7 +90,9 @@ const HeroSection = () => {
               Let's Connect
             </a>
             <a
-              href="#contact"
+              href={RESUME_URL}
+              rel="noopener noreferrer"
+              onClick={handleResumeClick}
               className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg border-2 border-primary text-primary font-semibold hover:bg-primary hover:text-primary-foreground transition-all"
             >
               <Download className="w-4 h-4" />
