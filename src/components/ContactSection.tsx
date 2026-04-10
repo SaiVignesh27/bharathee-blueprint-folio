@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, LinkedinIcon } from "lucide-react";
+import { Mail, Phone, ExternalLink } from "lucide-react";
 
 const ContactSection = () => {
   return (
